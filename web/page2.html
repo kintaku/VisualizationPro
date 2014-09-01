@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery/external/jquery/jquery.js"/>
+    <script src="jquery/jquery-ui.js"></script>
+    <link href="jquery/jquery-ui.css" rel="stylesheet">
+    <script src="js/d3.v3.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+    <style>
+        body{
+            padding: 20px;
+            margin: 0 auto;
+            background:#333;
+        }
+        rect.bordered {
+            stroke: #E6E6E6;
+            stroke-width:2px;
+        }
+
+        text.mono {
+            font-size: 9pt;
+            font-family: Consolas, courier;
+            fill: #efefef;
+        }
+
+        text.axis-workweek {
+            fill: #00b9e8;
+        }
+
+        text.axis-worktime {
+            fill: #00b9e8;
+        }
+        text.label_txt{
+            fill:#efefef;
+        }
+        ul{
+            float:left;
+            padding: 0;
+            margin: 0 auto;
+        }
+        li{
+            float:left;
+            list-style: none;
+            padding: 0;
+        }
+        #panel{
+            float: right;
+            position: absolute;
+            display: none;
+            right: 0px;
+            top: 0px;
+            width:25%;
+            min-height: 500px;
+            height: 100%;
+            background:rgba(219,219,195,0.5);
+            opacity: 1;
+            margin: 0 auto;
+            padding: 20px;
+            border-left: #cccccc 1px solid;
+        }
+        #panel_title {
+            margin: 0 auto;
+            margin-left: 10px;
+            padding: 0px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .title1{
+            margin-bottom: 20px;
+            margin-left:  10px;
+            color: #ffffff;
+        }
+        .pie_block:hover{
+            stroke-width:2px;
+            stroke:#ffffff;
+        }
+        .arc:hover .pie_label{
+            z-index:999;
+        }
+        #tag {
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            -khtml-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            border-width: 10px;
+            /*border-style: solid;
+            border-color: #cccccc;*/
+            background-color: rgba(0,0,0,0.8);
+            z-index:99;
+        }
+
+        #tag_percent{
+            width: 100%;
+            height: auto;
+            line-height: 100%;
+            margin: 0 auto;
+            padding: 0px;
+            color: #ffffff;
+            font-size: 10px;
+            text-align: left;
+        }
+        #tag_number{
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            padding: 0px;
+            color: #ffffff;
+            font-size: 10px;
+            text-align: left;
+        }
+        #rect_tag {
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            padding: 5px;
+            -khtml-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            border-width: 10px;
+            background-color: rgba(0,0,0,0.8);
+            z-index:99;
+        }
+        #rect_tag p{
+            color: #ffffff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!-- 详细页面-->
+    <div id="tag">
+        <p id="tag_percent">20%</p>
+        <p id="tag_number">20/300</p>
+    </div>
+    <div id="rect_tag">
+        <p id="cishu">fsagsdha</p>
+    </div>
+    <div id="panel">
+        <p id="panel_title">Manner in Aug</p>
+        <ul>
+            <li style="margin-top: 20px;">
+                <span class="title1" id="pie_title1">本月活跃用户</span>
+                <p id="pie_chart">
+
+                </p>
+            </li>
+            <!-- legend -->
+            <li>
+                <ul style="margin-top: 80px;">
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                   style="fill:#EFEFEF;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Nan</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#23B7B7;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Album</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#F5A80E;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Mobile</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#D4020F;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Pc</text>
+                        </svg>
+                    </ol>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li style="margin-top: 20px;">
+                <span class="title1" id="pie_title2">当月已激活用户</span>
+                <p id="pie_chart_user"></p>
+            </li>
+            <li>
+                <ul style="margin-top: 80px;">
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#EFEFEF;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Nan</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#23B7B7;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Album</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#F5A80E;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Mobile</text>
+                        </svg>
+                    </ol>
+                    <ol>
+                        <svg width="120" height="20">
+                            <rect width="20" height="20"
+                                  style="fill:#D4020F;"/>
+                            <text x="30" y="15" fill="#DBDBC3">user Pc</text>
+                        </svg>
+                    </ol>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <p>
+       <span style="color: #efefef;">Rank by:</span>
+        <select id="rank_type" onchange="showDropdown()">
+            <option value="month">Month</option>
+            <option value="week">Week</option>
+        </select>
+        <!--input id="num" type="number" name="number" value="6"/-->
+
+    <select id="month_index" name="month_index">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6" selected="selected">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+    </select>
+        <input class="inputDate" id="datepicker" value="23" style="display: none" />
+        <Button onclick="showDataChart()">Ok</Button>
+    </p>
+</div>
+<div id="chart"></div>
+<div style="width: 1200px">
+    <ul>
+        <li id="chart1"></li>
+        <li id="chart2"></li>
+        <li id="chart3"></li>
+        <li id="chart4"></li>
+    </ul>
+</div>
+<script type="text/javascript" src="page2_action.js">
+
+</script>
+</body>
+</html>

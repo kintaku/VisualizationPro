@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="css/page4.css"/>
+<script type="application/javascript" src="js/d3.v3.min.js"></script>
+<script type="application/javascript">
+    function closePanel(){
+        document.getElementById("matrix_panel").style.display="none";
+    }
+</script>
+<body>
+<div id="matrix_panel">
+    <p id="num_group">ooo345's Group</p>
+    <button class="btn_close" onclick="closePanel()">Close</button>
+    <p>纵坐标－ from node  横坐标 － to node</p>
+    <ul>
+        <li id="matrix_chart1"></li>
+        <li id="matrix_chart2"></li>
+    </ul>
+    <p id="martix_legend"></p>
+</div>
+
+<div id="toolbar">
+    <Button id="btn_start" onclick="startAnimation()">Start</Button>
+    <Button id="btn_pause" class="pause" onclick="pauseAnimation()">Pause</Button>
+
+    <label id="play_label">Set Play Rate:</label>
+    <select id="play_type" onchange="setRate()">
+        <option value="1">Fast</option>
+        <option value="2" selected="selected">Medium</option>
+        <option value="3">Slow</option>
+    </select>
+
+    <label id="dis_label">Show Send Record:</label>
+    <select id="dis_type" onchange="showDropdown()">
+        <option value="1">True</option>
+        <option value="2" selected="selected">False</option>
+    </select>
+    <span id="legend"></span>
+</div>
+<script type="application/javascript" src="page4_action.js"></script>
+
+<div id="tag">
+    <p id="tag_number">20%</p>
+</div>
+
+<div id="node_chart">
+
+</div>
+<div id="time_line">
+    <p id="time_progress">
+
+    </p>
+    <p id="time_label">2013-10-19</p>
+</div>
+
+
+</body>
+</html>
